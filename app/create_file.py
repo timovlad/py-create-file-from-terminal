@@ -14,7 +14,7 @@ def create_directory(path_parts: str) -> None:
 
 def create_file(filepath: str) -> None:
     try:
-        with open(filepath, 'a') as file:
+        with open(filepath, "a") as file:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             file.write(f"\n{timestamp}\n")
             print(f"File '{filepath}' created/updated."
@@ -23,7 +23,7 @@ def create_file(filepath: str) -> None:
             line_number = 1
             while True:
                 line = input(f"Enter content line {line_number}: ")
-                if line.lower() == 'stop':
+                if line.lower() == "stop":
                     break
                 file.write(f"{line_number} {line}\n")
                 line_number += 1
@@ -40,12 +40,12 @@ def main() -> None:
               " | [-d path_parts... -f filename]")
         return
 
-    flag_d = '-d' in sys.argv
-    flag_f = '-f' in sys.argv
+    flag_d = "-d" in sys.argv
+    flag_f = "-f" in sys.argv
 
     if flag_d and flag_f:
-        d_index = sys.argv.index('-d')
-        f_index = sys.argv.index('-f')
+        d_index = sys.argv.index("-d")
+        f_index = sys.argv.index("-f")
         if d_index < f_index:
             path_parts = sys.argv[d_index + 1:f_index]
             filename = sys.argv[f_index + 1]
@@ -57,11 +57,11 @@ def main() -> None:
         dir_path = os.path.join(*path_parts)
         create_file(os.path.join(dir_path, filename))
     elif flag_d:
-        d_index = sys.argv.index('-d')
+        d_index = sys.argv.index("-d")
         path_parts = sys.argv[d_index + 1:]
         create_directory(path_parts)
     elif flag_f:
-        f_index = sys.argv.index('-f')
+        f_index = sys.argv.index("-f")
         filename = sys.argv[f_index + 1]
         create_file(filename)
     else:
