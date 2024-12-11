@@ -22,12 +22,11 @@ def create_file(filepath: str) -> None:
                   f" (type 'stop' to finish): ")
             line_number = 1
             while True:
-                line = input(f"Enter content line {line_number}: ")
+                line = input("Enter content line: ")
                 if line.lower() == "stop":
                     break
                 file.write(f"{line_number} {line}\n")
                 line_number += 1
-        print(f"File '{filepath}' has been written successfully.")
     except Exception as e:
         print(f"An error occurred while creating the file: {e}")
 
@@ -39,22 +38,19 @@ def main() -> None:
               " | [-f filename]"
               " | [-d path_parts... -f filename]")
         return
-
     flag_d = "-d" in sys.argv
     flag_f = "-f" in sys.argv
-
     if flag_d and flag_f:
         d_index = sys.argv.index("-d")
         f_index = sys.argv.index("-f")
         if d_index < f_index:
             path_parts = sys.argv[d_index + 1:f_index]
             filename = sys.argv[f_index + 1]
-        else:
-            path_parts = sys.argv[f_index + 1:d_index]
-            filename = sys.argv[d_index + 1]
-
-        create_directory(path_parts)
+        if d_index > f_index:
+            path_parts = sys.argv[d_index + 1:]
+            filename = sys.argv[2]
         dir_path = os.path.join(*path_parts)
+        create_directory(path_parts)
         create_file(os.path.join(dir_path, filename))
     elif flag_d:
         d_index = sys.argv.index("-d")
